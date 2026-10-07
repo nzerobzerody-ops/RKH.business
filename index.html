@@ -1,519 +1,206 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+html
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 20.0px Arial; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; -webkit-text-stroke: #000000}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Courier; -webkit-text-stroke: #000000; min-height: 17.0px}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; -webkit-text-stroke: #000000}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.3px Arial; color: #000000; color: rgba(0, 0, 0, 0.85); -webkit-text-stroke: rgba(0, 0, 0, 0.85); min-height: 15.0px}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Arial; -webkit-text-stroke: #000000}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Arial; -webkit-text-stroke: #000000; min-height: 18.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Arial; -webkit-text-stroke: #000000; min-height: 16.0px}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Arial; color: #0000e9; -webkit-text-stroke: #0000e9}
-    span.s1 {font-kerning: none}
-    span.s2 {text-decoration: underline ; font-kerning: none}
-    span.s3 {text-decoration: underline ; font-kerning: none; color: #0000e9; -webkit-text-stroke: 0px #0000e9}
-    span.s4 {font: 14.0px Courier; font-kerning: none}
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RKH | The Digital Sanctuary</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cloudflare.com"></script>
+    <style>
+        :root {
+            --background: #000000;
+            --foreground: #e2e8f0;
+            --card-bg: rgba(14, 16, 20, 0.55);
+            --border-color: rgba(148, 163, 184, 0.18);
+            --text-muted: #64748b;
+            --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-display: 'Cinzel', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --chrome: linear-gradient(180deg, #ffffff 0%, #e2e8f0 35%, #94a3b8 55%, #f8fafc 75%, #64748b 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            min-height: 100vh;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        button, input { cursor: none; }
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .cursor-glow {
+            position: fixed; width: 360px; height: 360px; pointer-events: none; z-index: 9998; border-radius: 50%;
+            transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(148, 163, 184, 0.10) 0%, rgba(148, 163, 184, 0) 70%);
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .cursor-dot {
+            position: fixed; width: 28px; height: 28px; pointer-events: none; z-index: 9999; border-radius: 50%;
+            transform: translate(-50%, -50%); border: 1px solid rgba(226, 232, 240, 0.7); mix-blend-mode: difference;
+        }
+        #canvas-viewport { position: fixed; inset: 0; z-index: 0; opacity: 0.90; }
+        .gradient-shroud { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2) 50%, #000000 100%); pointer-events: none; }
+        .viewport-hub { position: relative; z-index: 10; min-height: 100vh; display: flex; flex-direction: column; }
+        .system-top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; }
+        .chrome-text { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.15em; background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .extension-tag { color: #475569; font-size: 0.875rem; font-family: var(--font-sans); letter-spacing: normal; }
+        .audio-toggle-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--card-bg); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid var(--border-color); color: #cbd5e1; display: grid; place-items: center; transition: all 0.2s; }
+        .audio-toggle-btn:hover { color: #fff; border-color: rgba(226,232,240,0.5); }
+        .content-theater { padding-top: 8rem; padding-inline: 2.5rem; max-width: 1150px; width: 100%; margin: 0 auto; flex-grow: 1; display: flex; flex-direction: column; }
+        .glass-chassis { background: var(--card-bg); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid var(--border-color); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 2.25rem; min-height: 64vh; display: flex; flex-direction: column; animation: floatY 7s ease-in-out infinite; }
+        .module-view { display: none; flex-direction: column; height: 100%; flex-grow: 1; }
+        .module-view.active-pane { display: flex; }
+        .view-banner { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+        .sparkle-indicator { color: #cbd5e1; position: relative; display: flex; align-items: center; }
+        .sparkle-ping-wave { position: absolute; inset: 0; border-radius: 50%; animation: radar-pulse 2s infinite; background-color: rgba(148, 163, 184, 0.2); width: 100%; height: 100%; }
+        .output-stream { flex-grow: 1; overflow-y: auto; margin-bottom: 1.5rem; min-height: 260px; max-height: 46vh; padding-right: 0.5rem; }
+        .assistant-message { max-width: 82%; padding: 0.75rem 1rem; border-radius: 16px; font-size: 1rem; line-height: 1.625; background: rgba(14, 16, 20, 0.45); border: 1px solid var(--border-color); color: #cbd5e1; font-family: var(--font-serif); }
+        .console-input-row { display: flex; gap: 0.5rem; margin-top: auto; }
+        .console-textbox { flex-grow: 1; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(51, 65, 85, 0.6); border-radius: 9999px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: #f8fafc; outline: none; transition: border-color 0.2s; }
+        .console-textbox:focus { border-color: #94a3b8; }
+        .silver-dispatch-btn { background: linear-gradient(180deg, #f8fafc, #cbd5e1 50%, #94a3b8); color: #000; border: none; box-shadow: 0 2px 20px rgba(226, 232, 240, 0.25); border-radius: 50%; width: 48px; height: 48px; display: grid; place-items: center; transition: all 0.3s; }
+        .silver-dispatch-btn:hover { filter: brightness(1.12); transform: translateY(-2px); }
+        .dock-container { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 40; width: max-content; }
+        .dock-chassis { background: var(--card-bg); backdrop-filter: blur(18px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.6rem 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .dock-action-node { position: relative; display: flex; align-items: center; gap: 0.5rem; border-radius: 9999px; padding: 0.5rem 1rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: none; color: #94a3b8; transition: all 0.4s; }
+        .dock-action-node:hover { color: #fff; }
+        .dock-action-node.active-node { background: linear-gradient(135deg, #f8fafc, #94a3b8); color: #000000; font-weight: 600; }
+        .secondary-lock-icon { opacity: 0.6; margin-left: 2px; display: inline-flex; align-items: center; }
+        .system-footer-tagline { position: fixed; bottom: 0.75rem; left: 50%; transform: translateX(-50%); font-size: 9px; letter-spacing: 0.3em; color: #334155; font-family: var(--font-mono); text-transform: uppercase; white-space: nowrap; z-index: 35; }
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes radar-pulse { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">html</span></p>
-<p class="p2"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p2"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p2"><span class="s1">&lt;head&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="utf-8"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;RKH | The Digital Sanctuary&lt;/title&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Authentic Premium Typography Assets --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://googleapis.com"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://gstatic.com" crossorigin&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@300;400;500&amp;display=swap" rel="stylesheet"&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Three.js Engine for Background Space Traversal Matrix --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cloudflare.com"&gt;&lt;/script&gt;</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>:root {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--background: #000000;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--foreground: oklch(91% 0.013 255);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--card-bg: rgba(14, 16, 20, 0.55);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--border-color: rgba(148, 163, 184, 0.18);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--text-muted: #64748b;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--font-serif: 'Cormorant Garamond', Georgia, serif;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--font-display: 'Cinzel', serif;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--font-mono: 'JetBrains Mono', monospace;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--silver: oklch(91% 0.032 214);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>--chrome: linear-gradient(180deg, #ffffff 0%, #e2e8f0 35%, #94a3b8 55%, #f8fafc 75%, #64748b 100%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>* {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>margin: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>body {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background-color: var(--background);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: var(--foreground);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-family: var(--font-sans);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>overflow-x: hidden;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>min-height: 100vh;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>cursor: none; /* Immersive UI cursor mapping override */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-font-smoothing: antialiased;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>button, input {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>cursor: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- THE GRAIN / NOISE ARCHITECTURE --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>body::after {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>content: '';</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>inset: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0.035;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- CURSOR SYSTEMS ENGINE --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.cursor-glow {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 360px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 360px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 9998;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transform: translate(-50%, -50%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: radial-gradient(circle, rgba(148, 163, 184, 0.10) 0%, rgba(148, 163, 184, 0) 70%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transition: opacity 0.4s ease;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.cursor-dot {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 28px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 28px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 9999;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transform: translate(-50%, -50%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(226, 232, 240, 0.7);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>mix-blend-mode: difference;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- 3D CANVAS AMBIENCE CANVAS --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>#canvas-viewport {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>inset: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0.90;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.gradient-shroud {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>inset: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2) 50%, #000000 100%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- CONTAINER WRAPPERS --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.viewport-hub {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: relative;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 10;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>min-height: 100vh;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-direction: column;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* Luxury System Top Navigation */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.system-top-nav {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>right: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 30;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: space-between;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 1.25rem 2.5rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.chrome-text {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-family: var(--font-display);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 1.25rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>letter-spacing: 0.15em;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: var(--chrome);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-background-clip: text;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background-clip: text;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: transparent;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.extension-tag {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #475569;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 0.875rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-family: var(--font-sans);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>letter-spacing: normal;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.audio-toggle-btn {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 40px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 40px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: var(--card-bg);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #cbd5e1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: grid;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>place-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transition: color 0.2s, border-color 0.2s;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(148,163,184,0.18);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.audio-toggle-btn:hover {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #fff;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-color: rgba(226,232,240,0.5);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* Central Glass Architecture Module */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.content-theater {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding-top: 8rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding-inline: 2.5rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 1150px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>margin: 0 auto;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-grow: 1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-direction: column;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.glass-chassis {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: var(--card-bg);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 28px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 2.25rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>min-height: 64vh;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-direction: column;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>animation: floatY 7s ease-in-out infinite;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- SWITCHABLE TAB INTERFACES --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.module-view {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-direction: column;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-grow: 1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.module-view.active-pane {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.view-banner {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>gap: 0.75rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>margin-bottom: 1.25rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.sparkle-indicator {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #cbd5e1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: relative;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.sparkle-ping-wave {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>inset: 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>animation: radar-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background-color: rgba(148, 163, 184, 0.2);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* Text Outputs */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.output-stream {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-grow: 1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>overflow-y: auto;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>margin-bottom: 1.5rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>min-height: 260px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>max-height: 46vh;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding-right: 0.5rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.assistant-message {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 82%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 0.75rem 1rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 16px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 1rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>line-height: 1.625;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: rgba(14, 16, 20, 0.45);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #cbd5e1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-family: var(--font-serif);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* Input Controls Setup */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.console-input-row {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>gap: 0.5rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>margin-top: auto;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.console-textbox {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>flex-grow: 1;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.6);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(51, 65, 85, 0.6);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 9999px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 0.75rem 1.25rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 0.875rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #f8fafc;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>outline: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>font-family: var(--font-sans);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transition: border-color 0.2s ease;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.console-textbox:focus {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-color: #94a3b8;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.silver-dispatch-btn {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(180deg, #f8fafc, #cbd5e1 50%, #94a3b8);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>color: #000;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: none;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 2px 20px rgba(226, 232, 240, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: 48px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>height: 48px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: grid;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>place-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s, filter 0.3s;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.silver-dispatch-btn:hover {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>filter: brightness(1.12);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 6px 40px rgba(226, 232, 240, 0.5);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>/* --- THE CONTROL DOCK OVERLAY --- */</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.dock-container {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>bottom: 2rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>left: 50%;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 40;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>width: max-content;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.dock-chassis {</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>background: var(--card-bg);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-backdrop-filter: blur(18px) saturate(140%);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 9999px;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>padding: 0.6rem 0.75rem;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>gap: 0.5rem;</span></p>
-<p class="p4"><span class="s1">Use code with caution.</span></p>
-<p class="p5"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">.dock-action-node {</span></p>
-<p class="p6"><span class="s1">position: relative;</span></p>
-<p class="p6"><span class="s1">display: flex;</span></p>
-<p class="p6"><span class="s1">align-items: center;</span></p>
-<p class="p6"><span class="s1">gap: 0.5rem;</span></p>
-<p class="p6"><span class="s1">border-radius: 9999px;</span></p>
-<p class="p6"><span class="s1">padding: 0.5rem 1rem;</span></p>
-<p class="p6"><span class="s1">font-size: 0.75rem;</span></p>
-<p class="p6"><span class="s1">letter-spacing: 0.1em;</span></p>
-<p class="p6"><span class="s1">text-transform: uppercase;</span></p>
-<p class="p6"><span class="s1">background: transparent;</span></p>
-<p class="p6"><span class="s1">border: none;</span></p>
-<p class="p6"><span class="s1">color: #94a3b8;</span></p>
-<p class="p6"><span class="s1">font-family: var(--font-sans);</span></p>
-<p class="p6"><span class="s1">transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">.dock-action-node:hover {</span></p>
-<p class="p6"><span class="s1">color: #fff;</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">.dock-action-node.active-node {</span></p>
-<p class="p6"><span class="s1">background: linear-gradient(135deg, #f8fafc, #94a3b8);</span></p>
-<p class="p6"><span class="s1">color: #000000;</span></p>
-<p class="p6"><span class="s1">font-weight: 600;</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">.secondary-lock-icon {</span></p>
-<p class="p6"><span class="s1">opacity: 0.6;</span></p>
-<p class="p6"><span class="s1">margin-left: 2px;</span></p>
-<p class="p6"><span class="s1">display: inline-flex;</span></p>
-<p class="p6"><span class="s1">align-items: center;</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">.system-footer-tagline {</span></p>
-<p class="p6"><span class="s1">position: fixed;</span></p>
-<p class="p6"><span class="s1">bottom: 0.75rem;</span></p>
-<p class="p6"><span class="s1">left: 50%;</span></p>
-<p class="p6"><span class="s1">transform: translateX(-50%);</span></p>
-<p class="p6"><span class="s1">font-size: 9px;</span></p>
-<p class="p6"><span class="s1">letter-spacing: 0.3em;</span></p>
-<p class="p6"><span class="s1">color: #334155;</span></p>
-<p class="p6"><span class="s1">font-family: var(--font-mono);</span></p>
-<p class="p6"><span class="s1">text-transform: uppercase;</span></p>
-<p class="p6"><span class="s1">white-space: nowrap;</span></p>
-<p class="p6"><span class="s1">z-index: 35;</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">/* --- MATRIX UTILITY ENGINE ANIMATIONS --- */</span></p>
-<p class="p6"><span class="s1">@keyframes floatY {</span></p>
-<p class="p6"><span class="s1">0%, 100% { transform: translateY(0); }</span></p>
-<p class="p6"><span class="s1">50% { transform: translateY(-12px); }</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">@keyframes radar-pulse {</span></p>
-<p class="p6"><span class="s1">75%, 100% { transform: scale(2.2); opacity: 0; }</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p8"><span class="s1"></span><br></p>
-<p class="p8"><span class="s1"><b></b></span><br></p>
-<p class="p9"><span class="s2"><a href="http://rkh.business/">RKH.business</a></span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p8"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">THE AI SOVEREIGN</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">I am the AI Sovereign. Tell me the vision you carry, and I shall help you architect it.</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">BLUEPRINT SYSTEMS</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">System blueprints are initialized. Structural nodes are tracing architectural grid systems patterns correctly across Tucson sectors.</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">THE VAULT SECURE</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Storage arrays locked down. Digital ledger encryption levels matching enterprise-grade algorithmic bounds. Secure handshake online.</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">BLACK BOX MATRIX LOGS</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Tracing runtime records. Analytics channels reporting standard operational efficiency indices across compiled script architectures. Zero faults flagged.</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">VISIONARY HUB PORTAL</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Identity tracking confirmed. Profile configurations match creative supervisor permissions templates. Visual system assets sync loaded successfully.</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Sovereign</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Blueprint</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">The Vault</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Black Box</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Visionary</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">Z-AXIS NAVIGATION · ZOOM INTO LAYERS</span></p>
-<p class="p6"><span class="s1">// 1. DYNAMIC IMMERSIVE POINTER RENDERING ENGINE</span></p>
-<p class="p6"><span class="s1">const cursorGlow = document.getElementById('glowEngine');</span></p>
-<p class="p6"><span class="s1">const cursorDot = document.getElementById('dotEngine');</span></p>
-<p class="p6"><span class="s1">window.addEventListener('mousemove', (event) =&gt; {</span></p>
-<p class="p6"><span class="s1">cursorGlow.style.opacity = '1';</span></p>
-<p class="p6"><span class="s1">cursorGlow.style.left = event.clientX + 'px';</span></p>
-<p class="p6"><span class="s3"><a href="http://cursorglow.style.top/">cursorGlow.style.top</a></span><span class="s1"> = event.clientY + 'px';</span></p>
-<p class="p8"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">cursorDot.style.left = event.clientX + 'px';</span></p>
-<p class="p6"><span class="s3"><a href="http://cursordot.style.top/">cursorDot.style.top</a></span><span class="s1"> = event.clientY + 'px';</span></p>
-<p class="p6"><span class="s1">});</span></p>
-<p class="p8"><span class="s1"></span><br></p>
-<p class="p6"><span class="s1">// 2. STAGE/TAB SYSTEM ROUTING ARCHITECTURE</span></p>
-<p class="p6"><span class="s1">const interactionNodes = document.querySelectorAll('.dock-action-node');</span></p>
-<p class="p6"><span class="s1">const contentPanes = document.querySelectorAll('.module-view');</span></p>
-<p class="p6"><span class="s1">interactionNodes.forEach(node =&gt; {</span></p>
-<p class="p6"><span class="s1">node.addEventListener('click', () =&gt; {</span></p>
-<p class="p6"><span class="s1">interactionNodes.forEach(item =&gt; item.classList.remove('active-node'));</span></p>
-<p class="p6"><span class="s1">contentPanes.forEach(pane =&gt; pane.classList.remove('active-pane'));</span></p>
-<p class="p6"><span class="s1">node.classList.add('active-node');</span></p>
-<p class="p6"><span class="s1">const targetView = document.getElementById(</span><span class="s4">view-${node.dataset.slide}</span><span class="s1">);</span></p>
-<p class="p6"><span class="s1">if (targetView) targetView.classList.add('active-pane');</span></p>
-<p class="p6"><span class="s1">});</span></p>
-<p class="p6"><span class="s1">});</span></p>
-<p class="p6"><span class="s1">// 3. THREE.JS VECTOR MATRIX GRAPHICS SIMULATOR</span></p>
-<p class="p6"><span class="s1">const viewCanvasContainer = document.getElementById('canvas-viewport');</span></p>
-<p class="p6"><span class="s1">const vectorScene = new THREE.Scene();</span></p>
-<p class="p6"><span class="s1">const mainCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);</span></p>
-<p class="p6"><span class="s1">mainCamera.position.z = 400;</span></p>
-<p class="p6"><span class="s1">const webglRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });</span></p>
-<p class="p6"><span class="s1">webglRenderer.setSize(window.innerWidth, window.innerHeight);</span></p>
-<p class="p6"><span class="s1">webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));</span></p>
-<p class="p6"><span class="s1">viewCanvasContainer.appendChild(webglRenderer.domElement);</span></p>
-<p class="p6"><span class="s1">// Populate Premium Particulate Fields</span></p>
-<p class="p6"><span class="s1">const matrixGeometry = new THREE.BufferGeometry();</span></p>
-<p class="p6"><span class="s1">const clusterCount = 1000;</span></p>
-<p class="p6"><span class="s1">const matrixCoordinates = new Float32Array(clusterCount * 3);</span></p>
-<p class="p6"><span class="s1">for(let idx = 0; idx &lt; clusterCount * 3; idx++) {</span></p>
-<p class="p6"><span class="s1">matrixCoordinates[idx] = (Math.random() - 0.5) * 850;</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">matrixGeometry.setAttribute('position', new THREE.BufferAttribute(matrixCoordinates, 3));</span></p>
-<p class="p6"><span class="s1">const clusterMaterial = new THREE.PointsMaterial({</span></p>
-<p class="p6"><span class="s1">color: 0x94a3b8,</span></p>
-<p class="p6"><span class="s1">size: 1.5,</span></p>
-<p class="p6"><span class="s1">transparent: true,</span></p>
-<p class="p6"><span class="s1">opacity: 0.65</span></p>
-<p class="p6"><span class="s1">});</span></p>
-<p class="p6"><span class="s1">const particulateField = new THREE.Points(matrixGeometry, clusterMaterial);</span></p>
-<p class="p6"><span class="s1">vectorScene.add(particulateField);</span></p>
-<p class="p6"><span class="s1">// Viewport Dimension Change Synchronization</span></p>
-<p class="p6"><span class="s1">window.addEventListener('resize', () =&gt; {</span></p>
-<p class="p6"><span class="s1">mainCamera.aspect = window.innerWidth / window.innerHeight;</span></p>
-<p class="p6"><span class="s1">mainCamera.updateProjectionMatrix();</span></p>
-<p class="p6"><span class="s1">webglRenderer.setSize(window.innerWidth, window.innerHeight);</span></p>
-<p class="p6"><span class="s1">});</span></p>
-<p class="p6"><span class="s1">// Matrix Graphics Frame Step Cycle</span></p>
-<p class="p6"><span class="s1">function stepRenderFrame() {</span></p>
-<p class="p6"><span class="s1">requestAnimationFrame(stepRenderFrame);</span></p>
-<p class="p6"><span class="s1">particulateField.rotation.y += 0.0005;</span></p>
-<p class="p6"><span class="s1">particulateField.rotation.x += 0.0002;</span></p>
-<p class="p6"><span class="s1">webglRenderer.render(vectorScene, mainCamera);</span></p>
-<p class="p6"><span class="s1">}</span></p>
-<p class="p6"><span class="s1">stepRenderFrame();</span></p>
-</body>
-</html>
+    <div class="cursor-glow" id="glowEngine"></div>
+    <div class="cursor-dot" id="dotEngine"></div>
+    <div id="canvas-viewport"><div class="gradient-shroud"></div></div>
+    <div class="viewport-hub">
+        <header class="system-top-nav">
+            <div class="chrome-text">RKH<span class="extension-tag">.business</span></div>
+            <button class="audio-toggle-btn">
+                <svg xmlns="http://w3.org" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg>
+            </button>
+        </header>
+        <main class="content-theater">
+            <div class="glass-chassis">
+                <div class="module-view active-pane" id="view-sovereign">
+                    <div class="view-banner">
+                        <div class="sparkle-indicator">
+                            <svg xmlns="http://w3.org" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>
+                            <span class="sparkle-ping-wave"></span>
+                        </div>
+                        <h2 class="chrome-text">THE AI SOVEREIGN</h2>
+                    </div>
+                    <div class="output-stream">
+                        <div class="assistant-message">I am the AI Sovereign. Tell me the vision you carry, and I shall help you architect it.</div>
+                    </div>
+                    <div class="console-input-row">
+                        <input type="text" placeholder="Speak to the Sovereign…" class="console-textbox">
+                        <button class="silver-dispatch-btn">
+Use code with caution.
+BLUEPRINT SYSTEMS
+
+System blueprints are initialized. Structural nodes are tracing architectural grid systems patterns correctly across Tucson sectors.
+
+
+
+
+THE VAULT SECURE
+
+Storage arrays locked down. Digital ledger encryption levels matching enterprise-grade algorithmic bounds. Secure handshake online.
+
+
+
+
+BLACK BOX MATRIX LOGS
+
+Tracing runtime records. Analytics channels reporting standard operational efficiency indices across compiled script architectures. Zero faults flagged.
+
+
+
+
+VISIONARY HUB PORTAL
+
+Identity tracking confirmed. Profile configurations match creative supervisor permissions templates. Visual system assets sync loaded successfully.
+
+
+
+
+
+
+
+Sovereign
+
+
+
+Blueprint
+
+
+
+The Vault
+
+
+
+
+Black Box
+
+
+
+Visionary
+
+
+
+Z-AXIS NAVIGATION · ZOOM INTO LAYERS
+
+
+const cursorGlow = document.getElementById('glowEngine');
+const cursorDot = document.getElementById('dotEngine');
+window.addEventListener('mousemove', (event) => {
+cursorGlow.style.opacity = '1'; cursorGlow.style.left = event.clientX + 'px'; cursorGlow.style.top = event.clientY + 'px';
+cursorDot.style.left = event.clientX + 'px'; cursorDot.style.top = event.clientY + 'px';
+});
+const interactionNodes = document.querySelectorAll('.dock-action-node');
+const contentPanes = document.querySelectorAll('.module-view');
+interactionNodes.forEach(node => {
+node.addEventListener('click', () => {
+interactionNodes.forEach(item => item.classList.remove('active-node'));
+contentPanes.forEach(pane => pane.classList.remove('active-pane'));
+node.classList.add('active-node');
+const targetView = document.getElementById(view-${node.dataset.slide});
+if (targetView) targetView.classList.add('active-pane');
+});
+});
+const viewCanvasContainer = document.getElementById('canvas-viewport');
+const vectorScene = new THREE.Scene();
+const mainCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+mainCamera.position.z = 400;
+const webglRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+webglRenderer.setSize(window.innerWidth, window.innerHeight);
+webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+viewCanvasContainer.appendChild(webglRenderer.domElement);
+const matrixGeometry = new THREE.BufferGeometry();
+const clusterCount = 1000;
+const matrixCoordinates = new Float32Array(clusterCount * 3);
+for(let idx = 0; idx < clusterCount * 3; idx++) { matrixCoordinates[idx] = (Math.random() - 0.5) * 850; }
+matrixGeometry.setAttribute('position', new THREE.BufferAttribute(matrixCoordinates, 3));
+const clusterMaterial = new THREE.PointsMaterial({ color: 0x94a3b8, size: 1.5, transparent: true, opacity: 0.65 });
+const particulateField = new THREE.Points(matrixGeometry, clusterMaterial);
+vectorScene.add(particulateField);
+window.addEventListener('resize', () => {
+mainCamera.aspect = window.innerWidth / window.innerHeight; mainCamera.updateProjectionMatrix();
+webglRenderer.setSize(window.innerWidth, window.innerHeight);
+});
+function stepRenderFrame() {
+requestAnimationFrame(stepRenderFrame); particulateField.rotation.y += 0.0005; particulateField.rotation.x += 0.0002;
+webglRenderer.render(vectorScene, mainCamera);
+}
+stepRenderFrame();
